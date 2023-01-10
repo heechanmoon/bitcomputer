@@ -5,12 +5,12 @@ import util.ScannerUtil;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Ex10Lotto3 {
+public class powerball {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-        int[] lottoNumbers = new int[6];
-        int[] computerNumbers = new int[6];
+        int[] lottoNumbers = new int[5];
+        int[] computerNumbers = new int[5];
 
         while(true) {
             String message = "로또번호 추첨기 1. 수동 2. 자동 3. 종료 4. 1등 당첨될때까지";
@@ -30,19 +30,26 @@ public class Ex10Lotto3 {
                 int count = 0;
                 int buyCount = 0;
                 int totalCount = 0;
-                for(int i=0; i<100; i++) {
-                    while (count != 6) {
-                        int[] user = autoLotto(lottoNumbers, random);
-                        int[] computer = autoLotto(computerNumbers, random);
-                        count = lottoFirstOn(user, computer);
-                        buyCount++;
+                boolean overflow = false;
+
+                while (count != 6) {
+                    int[] user = autoLotto(lottoNumbers, random);
+                    int userPowerBall = powerball(random);
+                    int[] computer = autoLotto(computerNumbers, random);
+                    int computerPowerBall = powerball(random);
+                    count = lottoFirstOn(user, computer, userPowerBall, computerPowerBall);
+                    buyCount++;
+
+                    if(buyCount<0){
+                        overflow = true;
+                        break;
                     }
-                    System.out.println(buyCount + "번만에 당첨!");
-                    totalCount += buyCount;
-                    count = 0;
-                    buyCount=0;
                 }
-                System.out.printf("평균확률 : %d분의 %d\n",totalCount/100,1);
+                if(overflow){
+                    System.out.println("오버플로우 발생");
+                }else {
+                    System.out.println(buyCount + "번만에 당첨!");
+                }
             }
         }
         System.out.println();
@@ -50,7 +57,7 @@ public class Ex10Lotto3 {
 
     public static int[] autoLotto(int[] lottoNumbers, Random random) {
         for(int i=0; i<lottoNumbers.length;){
-            int temp = random.nextInt(45)+1;
+            int temp = random.nextInt(69)+1;
             boolean numberSwitch = true;
 
             for(int j=0; j<i; j++) {
@@ -83,6 +90,11 @@ public class Ex10Lotto3 {
         */
 
         return lottoNumbers;
+    }
+
+    public static int powerball(Random random){
+        int temp = random.nextInt(26)+1;
+        return temp;
     }
 
     public static int[] manualLotto(int[] lottoNumbers, Scanner scanner) {
@@ -153,7 +165,7 @@ public class Ex10Lotto3 {
         }
     }
 
-    public static int lottoFirstOn(int[] user, int[] computer) {
+    public static int lottoFirstOn(int[] user, int[] computer, int userPowerBall, int computerPowerBall) {
         int count = 0;
 
         for(int i=0; i<user.length; i++){
@@ -162,6 +174,10 @@ public class Ex10Lotto3 {
                     count++;
                 }
             }
+        }
+
+        if(userPowerBall==computerPowerBall){
+            count++;
         }
 
         return count;
