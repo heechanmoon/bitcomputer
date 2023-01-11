@@ -1,6 +1,11 @@
 package day0111;
 
+import util.ScannerUtil;
+
+import java.util.Scanner;
+
 public class Student {
+    public static final Scanner SCANNER = new Scanner(System.in);
     private int id;
     private String name;
     private int korean;
@@ -45,6 +50,25 @@ public class Student {
 
     public void setMath(int math) {
         this.math = math;
+    }
+
+    public void insertStudent(int id){
+        String message;
+
+        message = "이름 입력";
+        name = ScannerUtil.nextLine(SCANNER, message);
+
+        message = "국어 점수 입력";
+        korean = ScannerUtil.nextInt(SCANNER, message,0,100);
+
+        message = "영어 점수 입력";
+        english = ScannerUtil.nextInt(SCANNER, message,0,100);
+
+        message = "수학 점수 입력";
+        math = ScannerUtil.nextInt(SCANNER, message,0,100);
+
+        this.id = id;
+
     }
 
     public Student(){
