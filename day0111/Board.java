@@ -7,10 +7,35 @@ import java.util.Scanner;
 //게시판 만들기 : 제목 작성자 글번호 글내용
 public class Board {
     public static final Scanner SCANNER = new Scanner(System.in);
-    public String title;
-    public String name;
-    public int number;
-    public String write;
+    private String title;
+    private String name;
+    private int number;
+    private String write;
+
+    public int getNumber(){
+        return number;
+    }
+    public void setNumber(int number){
+        this.number = number;
+    }
+    public String getTitle(){
+        return title;
+    }
+    public void setTitle(String title){
+        this.title = title;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getWrite(){
+        return write;
+    }
+    public void setWrite(String write){
+        this.write = write;
+    }
 
     public void printBoard(){
         System.out.println("게시글 번호: "+number+"번 게시자 이름: "+name);
