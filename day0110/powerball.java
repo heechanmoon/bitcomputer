@@ -31,12 +31,17 @@ public class powerball {
                 int buyCount = 0;
                 int totalCount = 0;
                 boolean overflow = false;
+                int[] user = new int[5];
+                int[] computer = new int[5];
+
+                int userPowerBall = 0;
+                int computerPowerBall = 0;
 
                 while (count != 6) {
-                    int[] user = autoLotto(lottoNumbers, random);
-                    int userPowerBall = powerball(random);
-                    int[] computer = autoLotto(computerNumbers, random);
-                    int computerPowerBall = powerball(random);
+                    user = autoLotto(lottoNumbers, random);
+                    userPowerBall = powerball(random);
+                    computer = autoLotto(computerNumbers, random);
+                    computerPowerBall = powerball(random);
                     count = lottoFirstOn(user, computer, userPowerBall, computerPowerBall);
                     buyCount++;
 
@@ -48,6 +53,14 @@ public class powerball {
                 if(overflow){
                     System.out.println("오버플로우 발생");
                 }else {
+                    for(int i=0; i<5; i++){
+                        System.out.printf("%d  ",user[i]);
+                    }
+                    System.out.printf("PowerBall : %d\n",userPowerBall);
+                    for(int i=0; i<5; i++){
+                        System.out.printf("%d  ",computer[i]);
+                    }
+                    System.out.printf("PowerBall : %d\n",computerPowerBall);
                     System.out.println(buyCount + "번만에 당첨!");
                 }
             }
