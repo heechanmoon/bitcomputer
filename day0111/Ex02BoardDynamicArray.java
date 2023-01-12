@@ -131,6 +131,6 @@ public class Ex02BoardDynamicArray {
     }
 
     public static void deleteBoard(Board choiceBoard){
-        boardArray = ArrayUtil.removeByElement(boardArray,choiceBoard);
+        boardArray = ArrayUtil.remove(boardArray,choiceBoard);
     }
 }

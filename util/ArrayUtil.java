@@ -193,8 +193,8 @@ public class ArrayUtil {
     }
     // D. contains()
     public static boolean contains(Board[] array, Board element) {
-        for (int i = 0; i < size(array); i++) {
-            if (element == get(array,i)) {
+        for(Board b : array){
+            if(element.equals(b)){
                 return true;
             }
         }
@@ -203,7 +203,7 @@ public class ArrayUtil {
     // D. indexOf()
     public static int indexOf(Board[] array, Board element){
         for(int i = 0; i < size(array); i++){
-            if(element == get(array,i)){
+            if(element.equals(get(array,i))){
                 return i;
             }
         }
@@ -234,6 +234,20 @@ public class ArrayUtil {
         return temp;
     }
 
+    public static Board[] addPlus(Board[] array, int index, Board element){
+        Board[] temp = new Board[0];
+        for(int i=0; i<size(array);){
+            if(i != index) {
+                temp = add(temp, get(array, i));
+                i++;
+            }else{
+                temp = add(temp,element);
+            }
+        }
+
+        return temp;
+    }
+
     // H. set()
     public static Board set(Board[] array, int index, Board element){
         Board original = get(array, index);
@@ -243,7 +257,7 @@ public class ArrayUtil {
     }
 
     //I.removeByIndex()
-    public static Board[] removeByIndex(Board[] array, int index){
+    public static Board[] remove(Board[] array, int index){
         Board[] temp = new Board[0];
         for(int i=0; i < size(array); i++){
             if(i!=index){
@@ -255,8 +269,8 @@ public class ArrayUtil {
     }
 
     //J.removeByElement
-    public static Board[] removeByElement(Board[] array, Board element){
-        return removeByIndex(array,indexOf(array,element));
+    public static Board[] remove(Board[] array, Board element){
+        return remove(array,indexOf(array,element));
     }
 
 
