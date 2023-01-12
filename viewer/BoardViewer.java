@@ -2,6 +2,7 @@ package viewer;
 
 import controller.BoardController;
 import model.BoardDTO;
+import model.UserDTO;
 import util.ScannerUtil;
 
 import java.util.ArrayList;
@@ -10,12 +11,26 @@ import java.util.Scanner;
 public class BoardViewer {
     private final Scanner SCANNER;
     private BoardController boardController;
+    private CommentViewer commentViewer;
+    private UserViewer userViewer;
     private static int nextId = 1;
-    private BoardDTO logIn = null;
+    private UserDTO logIn;
 
-    public BoardViewer(){
-        SCANNER = new Scanner(System.in);
+    public BoardViewer(Scanner scanner){
+        SCANNER = scanner;
         boardController = new BoardController();
+    }
+
+    public void setUserViewer(UserViewer userViewer){
+        this.userViewer = userViewer;
+    }
+
+    public void setCommentViewer(CommentViewer commentViewer){
+        this.commentViewer = commentViewer;
+    }
+
+    public void setLogIn(UserDTO logIn){
+        this.logIn = logIn;
     }
 
     public void showIndex(){
@@ -36,12 +51,12 @@ public class BoardViewer {
     private void writeBoard() {
         BoardDTO b = new BoardDTO();
 
+        b.setWriterId(logIn.getId());
+        b.setNickname(logIn.getNickname());
+
         b.setNumber(nextId++);
 
         String message;
-
-        message = "글의 작성자를 입력해주세요.";
-        b.setName(ScannerUtil.nextLine(SCANNER, message));
 
         message = "글의 제목을 입력해주세요.";
         b.setTitle(ScannerUtil.nextLine(SCANNER, message));
@@ -89,13 +104,25 @@ public class BoardViewer {
         //BoardDTO b = ArrayUtil.get(array, ArrayUtil.indexOf(array, temp));
         BoardDTO b = boardList.get(boardList.indexOf(temp));
 
-        System.out.println("게시글 번호: "+b.getNumber()+"번 게시자 이름: "+b.getName());
+        System.out.println("게시글 번호: "+b.getNumber()+"번 게시자 이름: "+b.getNickname());
         System.out.printf("제목: %s\n",b.getTitle());
         System.out.printf("내용: %s\n",b.getWrite());
         System.out.println("==================================");
 
-        String message = "1. 수정 2. 삭제 3. 뒤로가기";
-        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 3);
+        commentViewer.setBoardNumber(b);
+        commentViewer.setLogIn(logIn);
+        commentViewer.printList();
+
+        String message;
+        int userChoice;
+
+        if(b.getWriterId() == logIn.getId()){
+            message = "1. 수정 2. 삭제 3. 뒤로가기";
+            userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 3);
+        } else {
+            message = "3. 뒤로가기";
+            userChoice = ScannerUtil.nextInt(SCANNER, message, 3, 3);
+        }
 
         if (userChoice == 1) {
             message = "새로운 제목을 입력해주세요.";

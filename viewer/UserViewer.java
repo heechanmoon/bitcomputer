@@ -9,12 +9,17 @@ import java.util.Scanner;
 public class UserViewer {
     private final Scanner SCANNER;
     private UserController userController;
+    private BoardViewer boardViewer;
 
     private UserDTO logIn = null;
 
-    public UserViewer(){
-        SCANNER = new Scanner(System.in);
+    public UserViewer(Scanner scanner){
+        SCANNER = scanner;
         userController = new UserController();
+    }
+
+    public void setBoardViewer(BoardViewer boardViewer){
+        this.boardViewer = boardViewer;
     }
 
     public void showIndex(){
@@ -24,6 +29,7 @@ public class UserViewer {
             if(userChoice == 1){
                 auth();
                 if(logIn != null){
+                    boardViewer.setLogIn(logIn);
                     showMenu();
                 }
             }else if(userChoice==2){
@@ -80,17 +86,30 @@ public class UserViewer {
     }
 
     private void showMenu(){
-        String message = "1. 회원 정보 보기/수정 2. 회원 탈퇴 3. 로그 아웃";
+        String message = "1. 게시판으로 2. 회원 정보 관리 3. 로그 아웃";
         while(logIn != null){
             int userChoice = ScannerUtil.nextInt(SCANNER, message);
             if(userChoice == 1){
-                update();
+                boardViewer.showIndex();
             } else if (userChoice == 2) {
-                delete();
+                printOne();
             } else if (userChoice == 3) {
                 logIn = null;
                 System.out.println("로그아웃 되었습니다.");
             }
+        }
+    }
+
+    private void printOne(){
+        System.out.println("회원 번호: " + logIn.getId());
+        System.out.println("회원 닉네임: " + logIn.getNickname());
+        System.out.println("-------------------------------------------");
+        String message = "1. 수정 2. 탈퇴 3. 뒤로가기";
+        int userChoice = ScannerUtil.nextInt(SCANNER,message);
+        if(userChoice == 1){
+            update();
+        }else if(userChoice == 2){
+            delete();
         }
     }
 

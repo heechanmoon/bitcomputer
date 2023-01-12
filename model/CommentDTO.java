@@ -1,39 +1,22 @@
 package model;
 
-public class BoardDTO {
-    private String title;
+public class CommentDTO {
+
     private String Nickname;
     private int writerId;
     private int number;
-
-    public int getBoardNumber() {
-        return boardNumber;
-    }
-
-    public void setBoardNumber(int boardNumber) {
-        this.boardNumber = boardNumber;
-    }
-
-    private int boardNumber;
     private String write;
+
+    private int commentNumber;
 
     public int getWriterId() {
         return writerId;
-    }
-    public void setWriterId(int writerId) {
-        this.writerId = writerId;
     }
     public int getNumber(){
         return number;
     }
     public void setNumber(int number){
         this.number = number;
-    }
-    public String getTitle(){
-        return title;
-    }
-    public void setTitle(String title){
-        this.title = title;
     }
     public String getNickname(){
         return Nickname;
@@ -48,25 +31,34 @@ public class BoardDTO {
         this.write = write;
     }
 
+    public void setWriterId(int writerId) {
+        this.writerId = writerId;
+    }
+
+    public int getCommentNumber() {
+        return commentNumber;
+    }
+
+    public void setCommentNumber(int commentNumber) {
+        this.commentNumber = commentNumber;
+    }
 
     public boolean equals(Object o){
-        if(o instanceof  BoardDTO){
-            BoardDTO u = (BoardDTO) o;
+        if(o instanceof  CommentDTO){
+            CommentDTO u = (CommentDTO) o;
             return number == u.number;
         }
         return false;
     }
 
-    public BoardDTO(BoardDTO origin){
+    public CommentDTO(CommentDTO origin){
         number = origin.number;
         Nickname = origin.Nickname;
         writerId = origin.writerId;
-        title = origin.title;
         write = origin.write;
-        boardNumber = origin.boardNumber;
     }
 
-    public BoardDTO() {
+    public CommentDTO() {
 
     }
 }

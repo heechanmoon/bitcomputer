@@ -1,70 +1,72 @@
 package controller;
 
-import model.BoardDTO;
+import model.CommentDTO;
 
 import java.util.ArrayList;
 
-public class BoardController {
-    private ArrayList<BoardDTO> list;
+public class CommentController {
+    private ArrayList<CommentDTO> list;
     private int nextId;
-    public BoardController() {
+    public CommentController() {
         list = new ArrayList<>();
         nextId = 1;
-
-        for(int i = 1; i <= 4; i++){
-            BoardDTO b = new BoardDTO();
-            b.setTitle("제목 "+i);
-            b.setWriterId(1);
-            b.setNickname("일반회원1");
-            b.setWrite(i + "번째 게시글의 내용입니다.");
-
-            insert(b);
-        }
     }
 
-    public void insert(BoardDTO boardDTO){
-        boardDTO.setNumber(nextId++);
-        list.add(boardDTO);
+    public void insert(CommentDTO commentDTO){
+        commentDTO.setCommentNumber(nextId++);
+        list.add(commentDTO);
     }
 
     public boolean isEmpty(){
         return list.isEmpty();
     }
 
-    public ArrayList<BoardDTO> getList(){
+    public ArrayList<CommentDTO> getList(){
         return list;
     }
 
-    public BoardDTO selectById(int id){
-        for(BoardDTO b : list){
-            if(b.getNumber() == id){
-                return new BoardDTO(b);
+    public CommentDTO selectById(int id){
+        for(CommentDTO b : list){
+            if(b.getCommentNumber() == id){
+                return new CommentDTO(b);
             }
         }
         return null;
     }
 
-    public void update(BoardDTO boardDTO){
-        list.set(list.indexOf(boardDTO), boardDTO);
+    public void update(CommentDTO commentDTO){
+        list.set(list.indexOf(commentDTO), commentDTO);
     }
 
     public void delete(int number){
-        BoardDTO b = new BoardDTO();
+        CommentDTO b = new CommentDTO();
         b.setNumber(number);
         list.remove(b);
     }
 
+    public void delete(CommentDTO commentDTO){
+        list.remove(commentDTO);
+    }
+
+    public int getCommentNumber(CommentDTO commentDTO){
+        int number = list.indexOf(commentDTO);
+        return number;
+    }
+
+    /*
     public boolean validateUsername(String username){
         if(username.equalsIgnoreCase("X")){
             return false;
         }
-        for(BoardDTO u : list){
+        for(CommentDTO u : list){
             if(username.equalsIgnoreCase(u.getNickname())){
                 return false;
             }
         }
         return true;
     }
+
+     */
 
     /*
     public UserDTO auth(String username, String password){
