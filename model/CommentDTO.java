@@ -9,6 +9,16 @@ public class CommentDTO {
 
     private int commentNumber;
 
+    public int getNextIndex() {
+        return nextIndex;
+    }
+
+    public void setNextIndex(int nextIndex) {
+        this.nextIndex = nextIndex;
+    }
+
+    private int nextIndex;
+
     public int getWriterId() {
         return writerId;
     }
@@ -53,6 +63,8 @@ public class CommentDTO {
 
     public CommentDTO(CommentDTO origin){
         number = origin.number;
+        commentNumber = origin.commentNumber;
+        nextIndex = origin.nextIndex;
         Nickname = origin.Nickname;
         writerId = origin.writerId;
         write = origin.write;

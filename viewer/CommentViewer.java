@@ -12,19 +12,13 @@ import java.util.Scanner;
 public class CommentViewer {
     private final Scanner SCANNER;
     private CommentController commentController;
-    private UserViewer userViewer;
     private BoardViewer boardViewer;
-    private static int nextId = 1;
     private UserDTO logIn;
     private BoardDTO boardNumber;
 
     public CommentViewer(Scanner scanner){
         SCANNER = scanner;
         commentController = new CommentController();
-    }
-
-    public void setBoardViewer(BoardViewer boardViewer){
-        this.boardViewer = boardViewer;
     }
 
     public void setLogIn(UserDTO logIn){
@@ -53,7 +47,8 @@ public class CommentViewer {
     }
 
     public void printList() {
-        int userChoice = -1;
+        int userChoice;
+        CommentDTO b;
 
         if (commentController.isEmpty()) {
             System.out.println("댓글이 존재하지 않습니다.");
@@ -65,9 +60,9 @@ public class CommentViewer {
         } else {
             ArrayList<CommentDTO> commentList = commentController.getList();
             System.out.println("댓글 목록");
-            for (CommentDTO b : commentList) {
-                if(b.getNumber()==boardNumber.getNumber()) {
-                    System.out.printf("(%d)%s: %s\n", b.getCommentNumber(), b.getNickname(), b.getWrite());
+            for (CommentDTO d : commentList) {
+                if(d.getNumber()==boardNumber.getNumber()) {
+                    System.out.printf("(%d)%s: %s\n", d.getCommentNumber(), d.getNickname(), d.getWrite());
                 }
             }
             String message = "1.댓글 추가  2.댓글 삭제  3.댓글 수정";
@@ -75,27 +70,23 @@ public class CommentViewer {
             if (userChoice == 1) {
                 writeComment();
             } else if (userChoice == 2) {
-                CommentDTO b;
                 message = "삭제할 댓글의 번호를 입력해주세요.";
                 userChoice = ScannerUtil.nextInt(SCANNER, message);
-                b = commentController.selectById(userChoice);
-                b.setCommentNumber(userChoice);
-                if(b.getNickname() == logIn.getNickname()){
-                    commentController.delete(b);
+                b = commentController.selectById(boardNumber.getNumber(),userChoice);
+                if(b != null && b.getWriterId() == logIn.getId()){
+                    commentController.delete(b.getNextIndex());
                 } else{
                     System.out.println("삭제할 권한이 없습니다.");
                 }
             } else if (userChoice == 3){
-                CommentDTO b;
                 message = "수정할 댓글의 번호를 입력해주세요.";
                 userChoice = ScannerUtil.nextInt(SCANNER, message);
-                b = commentController.selectById(userChoice);
-                b.setCommentNumber(userChoice);
-                if(b.getNickname() == logIn.getNickname()){
+                b = commentController.selectById(boardNumber.getNumber(), userChoice);
+                if(b!=null && b.getWriterId() == logIn.getId()){
                     message = "수정 내용을 입력해주세요.";
                     String comment = ScannerUtil.nextLine(SCANNER, message);
                     b.setWrite(comment);
-                    commentController.update(b);
+                    commentController.update(b.getNextIndex(),b);
                 } else{
                     System.out.println("수정할 권한이 없습니다.");
                 }

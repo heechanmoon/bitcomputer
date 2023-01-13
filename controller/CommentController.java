@@ -1,20 +1,29 @@
 package controller;
 
+import model.BoardDTO;
 import model.CommentDTO;
 
 import java.util.ArrayList;
 
 public class CommentController {
     private ArrayList<CommentDTO> list;
-    private int nextId;
+    private int nextId = 0;
+    private int nextIndex;
     public CommentController() {
         list = new ArrayList<>();
-        nextId = 1;
+        nextIndex = 1;
     }
 
     public void insert(CommentDTO commentDTO){
-        commentDTO.setCommentNumber(nextId++);
+        for(CommentDTO d : list){
+            if(d.getNumber()==commentDTO.getNumber()){
+                nextId = d.getCommentNumber();
+            }
+        }
+        commentDTO.setCommentNumber(nextId+1);
+        commentDTO.setNextIndex(nextIndex++);
         list.add(commentDTO);
+        nextId = 0;
     }
 
     public boolean isEmpty(){
@@ -25,23 +34,33 @@ public class CommentController {
         return list;
     }
 
-    public CommentDTO selectById(int id){
+    public CommentDTO selectById(int boardNumber, int commentNumber){
         for(CommentDTO b : list){
-            if(b.getCommentNumber() == id){
+            if(b.getCommentNumber() == commentNumber && b.getNumber() == boardNumber){
                 return new CommentDTO(b);
             }
         }
         return null;
     }
 
-    public void update(CommentDTO commentDTO){
-        list.set(list.indexOf(commentDTO), commentDTO);
+    public void update(int nextIndex, CommentDTO commentDTO){
+        int updateIndex = -1;
+        for(CommentDTO b : list){
+            if(b.getNextIndex() == nextIndex){
+                updateIndex = b.getNextIndex()-1;
+            }
+        }
+        list.set(updateIndex, commentDTO);
     }
 
-    public void delete(int number){
-        CommentDTO b = new CommentDTO();
-        b.setNumber(number);
-        list.remove(b);
+    public void delete(int nextIndex){
+        int deleteIndex = -1;
+        for(CommentDTO b : list){
+            if(b.getNextIndex() == nextIndex){
+                deleteIndex = b.getNextIndex()-1;
+            }
+        }
+        list.remove(deleteIndex);
     }
 
     public void delete(CommentDTO commentDTO){
