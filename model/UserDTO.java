@@ -56,4 +56,14 @@ public class UserDTO {
     public UserDTO(){
 
     }
+
+    @Override
+    public String toString() {
+        return "{"+
+                "id: "+id+", "+
+                "username: "+username + ", " +
+                "password: "+password + ", " +
+                "nickname: "+nickname +
+                "}";
+    }
 }

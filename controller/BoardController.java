@@ -3,6 +3,7 @@ package controller;
 import model.BoardDTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BoardController {
     private ArrayList<BoardDTO> list;
@@ -24,6 +25,8 @@ public class BoardController {
 
     public void insert(BoardDTO boardDTO){
         boardDTO.setNumber(nextId++);
+        boardDTO.setEnrtyDate(new Date());
+        boardDTO.setModifyDate(new Date());
         list.add(boardDTO);
     }
 
@@ -45,6 +48,7 @@ public class BoardController {
     }
 
     public void update(BoardDTO boardDTO){
+        boardDTO.setModifyDate(new Date());
         list.set(list.indexOf(boardDTO), boardDTO);
     }
 

@@ -1,13 +1,33 @@
 package model;
 
+import java.util.Date;
+
 public class CommentDTO {
 
     private String Nickname;
     private int writerId;
     private int number;
     private String write;
-
     private int commentNumber;
+    private int nextIndex;
+    private Date entryDate;
+    private Date modifyDate;
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
+    }
 
     public int getNextIndex() {
         return nextIndex;
@@ -16,8 +36,6 @@ public class CommentDTO {
     public void setNextIndex(int nextIndex) {
         this.nextIndex = nextIndex;
     }
-
-    private int nextIndex;
 
     public int getWriterId() {
         return writerId;
@@ -68,9 +86,25 @@ public class CommentDTO {
         Nickname = origin.Nickname;
         writerId = origin.writerId;
         write = origin.write;
+        entryDate = origin.entryDate;
+        modifyDate = origin.modifyDate;
     }
 
     public CommentDTO() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "{"+
+                "number: "+number+", "+
+                "commentNumber: "+commentNumber + ", " +
+                "nextIndex: "+nextIndex + ", " +
+                "Nickname: "+Nickname +
+                "writerId: "+writerId + ", " +
+                "write: "+write + ", " +
+                "entryDate: "+entryDate + ", " +
+                "modifyDate: "+modifyDate + ", " +
+                "}";
     }
 }

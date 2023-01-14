@@ -1,10 +1,32 @@
 package model;
 
+import java.util.Date;
+
 public class BoardDTO {
     private String title;
     private String Nickname;
     private int writerId;
     private int number;
+    private int boardNumber;
+    private String write;
+
+    private Date enrtyDate;
+    private Date modifyDate;
+
+    public Date getEnrtyDate() {
+        return enrtyDate;
+    }
+
+    public void setEnrtyDate(Date enrtyDate) {
+        this.enrtyDate = enrtyDate;
+    }
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
 
     public int getBoardNumber() {
         return boardNumber;
@@ -13,9 +35,6 @@ public class BoardDTO {
     public void setBoardNumber(int boardNumber) {
         this.boardNumber = boardNumber;
     }
-
-    private int boardNumber;
-    private String write;
 
     public int getWriterId() {
         return writerId;
@@ -64,6 +83,8 @@ public class BoardDTO {
         title = origin.title;
         write = origin.write;
         boardNumber = origin.boardNumber;
+        enrtyDate = origin.enrtyDate;
+        modifyDate = origin.modifyDate;
     }
 
     public BoardDTO() {

@@ -5,11 +5,14 @@ import model.BoardDTO;
 import model.UserDTO;
 import util.ScannerUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BoardViewer {
     private final Scanner SCANNER;
+    private final String DATE_FORMAT = "yy/MM/dd HH:mm:ss";
     private BoardController boardController;
     private CommentViewer commentViewer;
     private UserViewer userViewer;
@@ -73,9 +76,10 @@ public class BoardViewer {
         if (boardController.isEmpty()) {
             System.out.println("아직 등록된 글이 존재하지 않습니다.");
         } else {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
             ArrayList<BoardDTO> boardList = boardController.getList();
             for (BoardDTO b : boardList) {
-                System.out.printf("%d. %s\n", b.getNumber(), b.getTitle());
+                System.out.printf("%d. %s - %s\n", b.getNumber(), b.getTitle(), df.format(b.getEnrtyDate()));
             }
             String message = "상세보기할 글의 번호나 뒤로 가실려면 0을 입력해주세요.";
             userChoice = ScannerUtil.nextInt(SCANNER, message);
@@ -96,6 +100,7 @@ public class BoardViewer {
     }
 
     private void printOne(int id) {
+        DateFormat df = new SimpleDateFormat(DATE_FORMAT);
         BoardDTO temp = new BoardDTO();
         temp.setNumber(id);
 
@@ -105,6 +110,8 @@ public class BoardViewer {
         BoardDTO b = boardList.get(boardList.indexOf(temp));
 
         System.out.println("게시글 번호: "+b.getNumber()+"번 게시자 이름: "+b.getNickname());
+        System.out.println("작성일: " + df.format(b.getEnrtyDate()));
+        System.out.println("수정일: " + df.format(b.getModifyDate()));
         System.out.printf("제목: %s\n",b.getTitle());
         System.out.printf("내용: %s\n",b.getWrite());
         System.out.println("==================================");

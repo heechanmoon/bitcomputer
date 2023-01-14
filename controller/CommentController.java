@@ -4,6 +4,7 @@ import model.BoardDTO;
 import model.CommentDTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CommentController {
     private ArrayList<CommentDTO> list;
@@ -22,6 +23,7 @@ public class CommentController {
         }
         commentDTO.setCommentNumber(nextId+1);
         commentDTO.setNextIndex(nextIndex++);
+        commentDTO.setEntryDate(new Date());
         list.add(commentDTO);
         nextId = 0;
     }
@@ -46,18 +48,21 @@ public class CommentController {
     public void update(int nextIndex, CommentDTO commentDTO){
         int updateIndex = -1;
         for(CommentDTO b : list){
+            updateIndex++;
             if(b.getNextIndex() == nextIndex){
-                updateIndex = b.getNextIndex()-1;
+                break;
             }
         }
+        commentDTO.setModifyDate(new Date());
         list.set(updateIndex, commentDTO);
     }
 
     public void delete(int nextIndex){
         int deleteIndex = -1;
         for(CommentDTO b : list){
+            deleteIndex++;
             if(b.getNextIndex() == nextIndex){
-                deleteIndex = b.getNextIndex()-1;
+                break;
             }
         }
         list.remove(deleteIndex);

@@ -6,6 +6,7 @@ import model.CommentDTO;
 import model.UserDTO;
 import util.ScannerUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -49,6 +50,7 @@ public class CommentViewer {
     public void printList() {
         int userChoice;
         CommentDTO b;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMd H:m:s");
 
         if (commentController.isEmpty()) {
             System.out.println("댓글이 존재하지 않습니다.");
@@ -61,8 +63,12 @@ public class CommentViewer {
             ArrayList<CommentDTO> commentList = commentController.getList();
             System.out.println("댓글 목록");
             for (CommentDTO d : commentList) {
+                String date = sdf.format(d.getEntryDate());
+                if(d.getModifyDate() != null){
+                    date = sdf.format(d.getModifyDate());
+                }
                 if(d.getNumber()==boardNumber.getNumber()) {
-                    System.out.printf("(%d)%s: %s\n", d.getCommentNumber(), d.getNickname(), d.getWrite());
+                    System.out.printf("(%d)%s: %s - %s\n", d.getCommentNumber(), d.getNickname(), d.getWrite(), date);
                 }
             }
             String message = "1.댓글 추가  2.댓글 삭제  3.댓글 수정";
