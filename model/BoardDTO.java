@@ -2,7 +2,7 @@ package model;
 
 import java.util.Date;
 
-public class BoardDTO {
+public class BoardDTO implements Comparable<BoardDTO>{
     private String title;
     private String Nickname;
     private int writerId;
@@ -67,6 +67,9 @@ public class BoardDTO {
         this.write = write;
     }
 
+    public int compareTo(BoardDTO b){
+        return this.number - b.number;
+    }
 
     public boolean equals(Object o){
         if(o instanceof  BoardDTO){
